@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}
+
+        {% endblock title %}
+        | Jorhanny</title>
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %} ">
+</head>
+
+<body>
+    <!--Cabecera de la pagina-->
+    <header>
+        <div id="logotipo">
+            <!--Logo django-->
+            <img src="{% static 'images/original.png' %}" alt="Django" />
+            <h1> Sitio web en Django | Jorhanny Bustos</h1>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li>
+                <a href="{% url 'index' %}">Inicio</a>
+            </li>
+            {% if user.email %}
+                <li>
+                    <a href="{% url 'list_articles' %}">Articulos</a>
+                </li>
+                    
+                {% for page in pages %}
+                <li>
+                    <a href="{% url 'page' page.2 %}">{{page.1}}</a>
+                </li>
+                
+                {% endfor %}
+
+                <li>
+                    <a href="{% url 'logout' %}">Cerrar session</a>
+                </li>
+            
+            {% else %}
+
+                <li>
+                    <a href="{% url 'register' %}">Registro</a>
+                </li>
+                <li>
+                    <a href="{% url 'login' %}">Login</a>
+                </li>
+            {% endif %}
+           
+        </ul>
+    </nav>
+    <div class="barra">
+        <span class="esquina-izquierda"></span>
+        <span class="relleno-barra"></span>
+        <span class="esquina-derecha"></span>
+    </div>
+
+    <div id="content">
+        <div class="box">
+            {% block content %}
+            <strong>Contenido del bloque original!!</strong>
+            <!--Codigo que viene de templates-->
+            {% endblock content %}
+        </div>
+    </div>
+
+    <footer>
+        Master en python &copy; Jorhanny - {% now "d/m/y" %}
+    </footer>
+
+</body>
+
+</html>
